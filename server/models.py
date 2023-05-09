@@ -20,7 +20,7 @@ class Customer(db.Model, SerializerMixin):
     email = db.Column(db.String)
     address = db.Column(db.String)
     payment = db.Column(db.Integer)
-    points = db.Column(db.Integer)
+    points = db.Column(db.Integer, default=0)
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
@@ -116,6 +116,3 @@ class MenuItem(db.Model, SerializerMixin):
             if type(value) is not float:
                 raise ValueError("Price must be a float.")
             return value
-
-
-    
