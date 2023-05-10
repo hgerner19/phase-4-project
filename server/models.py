@@ -16,7 +16,8 @@ class Customer(db.Model, SerializerMixin):
     # serialize_rules = ("-orders.customer", "-order_items.customer", "-menu_items.customer", "-created_at", "-updated_at")
 
     id = db.Column(db.Integer, primary_key = True)
-    username = db.Column(db.String)
+    first_name = db.Column(db.String)
+    last_name = db.Column(db.String)
     password_hash = db.Column(db.String)
     phone_number = db.Column(db.Integer)
     email = db.Column(db.String)

@@ -1,15 +1,39 @@
 import React, { useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
 
-import Home from "./Home.js"
 import NavBar from "./NavBar.js"
+import Home from "./Home.js"
+import Menu from "./Menu.js"
+import Login from "./Login.js"
+import CreateAccount from "./CreateAccount.js";
+import AboutUs from "./AboutUs.js";
+import PlaceOrder from "./PlaceOrder.js";
 
 function App() {
   // Code goes here!
   return (
     <>
       <NavBar />
-      <Home />
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route exact path="/menu">
+          <Menu />
+        </Route>
+        <Route exact path="/login">
+          <Login />
+        </Route>
+        <Route exact path="/create-account">
+          <CreateAccount />
+        </Route>
+        <Route exact path="/place-order">
+          <PlaceOrder />
+        </Route>
+        <Route exact path="/about-us">
+          <AboutUs />
+        </Route>
+      </Switch>
     </>
   )
 }

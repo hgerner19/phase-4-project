@@ -14,41 +14,44 @@ const Menu = () => {
         })
     }, [])
 
-    const renderApps = menuItems.map(item => {
-        if (item.category == "Appetizer") {
-            return <MenuItem item={item} />
-        }
-    })
-
-    const renderPastas = menuItems.map(item => {
-        if (item.category == "Pasta") {
-            return <MenuItem item={item} />
-        }
-    })
-
-    const renderPizzas = menuItems.map(item => {
-        if (item.category == "Pizza") {
-            return <MenuItem item={item} />
-        }
-    })
-
-    const renderDeserts = menuItems.map(item => {
-        if (item.category == "Desert") {
+    const renderMenuItems = (category) => menuItems.map(item => {
+        if (item.category == category) {
             return <MenuItem item={item} />
         }
     })
 
     return (
         <div id="menuDiv">
-            <h1 class="pageTitle">Menu Page</h1>
-            <h2 class="menuDivCategory">Appetizers</h2>
-            {renderApps}
-            <h2 class="menuDivCategory">Pasta</h2>
-            {renderPastas}
-            <h2 class="menuDivCategory">Pizza</h2>
-            {renderPizzas}
-            <h2 class="menuDivCategory">Desert</h2>
-            {renderDeserts}
+            <div id="menuHeader" class="menuItemsDiv">
+                <h1 class="pageTitle">Menu Page</h1>
+                <p class="menuDescription">
+                    <span>Below we have a large selection of delicious appetizers, meals, deserts, and drinks.</span>
+                    <br></br>
+                    <span>Whether you are just taking a look, getting ready to place a carryout order, or just want it delivered straight to your door this is the place to be!</span>
+                    <br></br>
+                    <span>If you would like to place an order, consider creating an account to earn points towards future orders!</span>
+                </p>
+            </div>
+            <div id="appsMenuDiv" class="menuItemsDiv">
+                <h2 class="menuDivCategory">Appetizers</h2>
+                {renderMenuItems("Appetizer")}
+            </div>
+            <div id="pastasMenuDiv" class="menuItemsDiv">
+                <h2 class="menuDivCategory">Pastas</h2>
+                {renderMenuItems("Pasta")}
+            </div>
+            <div id="pizzasMenuDiv" class="menuItemsDiv">
+                <h2 class="menuDivCategory">Pizzas</h2>
+                {renderMenuItems("Pizza")}
+            </div>
+            <div id="desertsMenuDiv" class="menuItemsDiv">
+                <h2 class="menuDivCategory">Deserts</h2>
+                {renderMenuItems("Desert")}
+            </div>
+            <div id="beveragesMenuDiv" class="menuItemsDiv">
+                <h2 class="menuDivCategory">Beverages</h2>
+                {renderMenuItems("Beverage")}
+            </div>
         </div>
     )
 }
