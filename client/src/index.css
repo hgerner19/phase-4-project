@@ -1,0 +1,12 @@
+body {
+    text-align: center;
+}
+
+.navBar {
+    font-size: 2rem;
+    display: flex;
+    justify-content: space-evenly;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
