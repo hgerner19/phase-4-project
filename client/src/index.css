@@ -1,12 +1,56 @@
 body {
+    margin: auto;
     text-align: center;
 }
 
 .navBar {
-    font-size: 2rem;
     display: flex;
     justify-content: space-evenly;
-    list-style-type: none;
+    align-items: center;
     margin: 0;
     padding: 0;
+    background-color: #5E0000;
+    height: 3rem;
+    font-size: 2rem;
+    color: white;
+    list-style-type: none;
+}
+
+#homepageDiv {
+    background-image: url("./images/stefan-c-asafti-9p6pFEwq-wI-unsplash.jpg");
+    background-size: cover;
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    padding-bottom: 10%;
+}
+
+#homepageDiv h1 {
+    font-size: 5rem;
+    color: white;
+    text-shadow: 2px 4px black;
+}
+
+#menuDiv {
+    position: relative;
+    padding-top: 125vh;
+}
+
+h3 {
+    font-size: 2rem;
+    color: white;
+    text-shadow: 1px 2px black;
+}
+
+.pageTitle {
+    font-size: 4.5rem;
+}
+
+.menuDivCategory {
+    font-size: 3.5rem;
+}
+
+.menuItemImg {
+    border-radius: 25px;
+    opacity: 85%;
 }

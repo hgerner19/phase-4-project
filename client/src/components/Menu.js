@@ -39,17 +39,17 @@ const Menu = () => {
     })
 
     return (
-        <>
-            <h1>Menu Page</h1>
-            <h2>Appetizers</h2>
+        <div id="menuDiv">
+            <h1 class="pageTitle">Menu Page</h1>
+            <h2 class="menuDivCategory">Appetizers</h2>
             {renderApps}
-            <h2>Pasta</h2>
+            <h2 class="menuDivCategory">Pasta</h2>
             {renderPastas}
-            <h2>Pizza</h2>
+            <h2 class="menuDivCategory">Pizza</h2>
             {renderPizzas}
-            <h2>Desert</h2>
+            <h2 class="menuDivCategory">Desert</h2>
             {renderDeserts}
-        </>
+        </div>
     )
 }
 
