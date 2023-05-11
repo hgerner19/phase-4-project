@@ -1,3 +1,4 @@
+import { useState } from "react"
 import {useLocation, useHistory } from "react-router-dom"
 
 const OrderCheckout = () => {
@@ -34,7 +35,7 @@ const OrderCheckout = () => {
                     <br></br><br></br>
                     <input type="email" name="email" placeholder="Enter your email here."></input>
                     <br></br><br></br>
-                    <input type="number" name="creditCard" placeholder="Credit card number."></input>
+                    <input type="text" name="creditCard" placeholder="Credit card number."></input>
                     <br></br><br></br>
                     <input type="text" name="expirationDate" placeholder="MM/YY"></input>
                     <br></br><br></br>
