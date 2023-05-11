@@ -7,7 +7,8 @@ import Menu from "./Menu.js"
 import Login from "./Login.js"
 import CreateAccount from "./CreateAccount.js";
 import AboutUs from "./AboutUs.js";
-import PlaceOrder from "./PlaceOrder.js";
+import Order from "./Order.js";
+import OrderCheckout from "./OrderCheckout.js"
 
 function App() {
   // Code goes here!
@@ -27,8 +28,11 @@ function App() {
         <Route exact path="/create-account">
           <CreateAccount />
         </Route>
-        <Route exact path="/place-order">
-          <PlaceOrder />
+        <Route exact path="/order">
+          <Order />
+        </Route>
+        <Route exact path="/order/checkout">
+          <OrderCheckout />
         </Route>
         <Route exact path="/about-us">
           <AboutUs />
