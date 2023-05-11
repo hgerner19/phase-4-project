@@ -27,7 +27,9 @@ const Order = () => {
         let orderItemName = event.target[category].value
         let orderItemQuantity = event.target.quantity.value
         let orderItem = menuItems.find((item) => item.name === orderItemName)
+        
         const newOrderItem = {
+            "id": orderItem.id,
             "name": orderItemName,
             "price": orderItem.price,
             "quantity": orderItemQuantity
@@ -46,7 +48,7 @@ const Order = () => {
                     {renderMenuItems(category)}
                 </select>
                 <br></br>
-                <input type="number" name="quantity" placeholder="How many?"></input>
+                <input type="number" name="quantity" defaultValue={1} placeholder="How many?"></input>
                 <br></br>
                 <button type="submit">Add to Order</button>
             </form>
@@ -64,7 +66,9 @@ const Order = () => {
     return (
         // Guest Order Form
         <div id="placeOrderDiv">
-            <h1>Order Menu Items Page!</h1>
+            <h1>Place an Order!</h1>
+            <p>If you already have an account, make sure you're logged in.</p>
+            <p>Otherwise, go ahead and select what items you'd like to order, how many, and when you're done proceed to checkout!</p>
             <div id="renderOrderItemsDiv">
                 {renderOrderItemForm("Appetizer")}
                 {renderOrderItemForm("Pasta")}
@@ -73,7 +77,7 @@ const Order = () => {
                 {renderOrderItemForm("Beverage")}
             </div>
             <br></br><br></br>
-            <button onClick={handleCheckoutRedirect}>Proceed to Checkout</button>            
+            <button class="mainButton" onClick={handleCheckoutRedirect}>Proceed to Checkout</button>            
         </div>
     )
 }

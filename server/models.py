@@ -92,6 +92,7 @@ class Order(db.Model, SerializerMixin):
     # serialize_rules = ("-customers.order", "-order_items.order", "-menu_items.order", "-created_at", "-updated_at")
 
     id = db.Column(db.Integer, primary_key = True)
+    total = db.Column(db.Float)
     notes = db.Column(db.Text)
     customer_id = db.Column(db.Integer, db.ForeignKey("customers.id"))
 

@@ -111,7 +111,7 @@ def customer_by_id(id):
 
     return response
 
-@app.route('/orderitems', methods=['GET'])
+@app.route('/orderitems', methods=['GET', 'POST'])
 def order_items():
     all_order_items = OrderItem.query.all()
 
@@ -119,7 +119,18 @@ def order_items():
         if request.method == 'GET':
             all_order_items_to_dict = [order_item.to_dict() for order_item in all_order_items]
             response = make_response(all_order_items_to_dict, 200)
-    
+
+        if request.method == 'POST':
+            form_data = request.get_json()
+            newOrderItem = OrderItem(
+                order_id=form_data["order_id"],
+                menu_item_id=form_data["menu_item_id"],
+                quantity=form_data["quantity"]
+            )
+            db.session.add(newOrderItem)
+            db.session.commit()
+            response = make_response(newOrderItem.to_dict(), 204)
+
     else:
         response = make_response({"error": "404: Order items not found."})
 
@@ -143,7 +154,7 @@ def order_item_by_id(id):
 
     return response
 
-@app.route('/orders', methods=['GET'])
+@app.route('/orders', methods=['GET', 'POST'])
 def orders():
     all_orders = Order.query.all()
 
@@ -151,6 +162,18 @@ def orders():
         if request.method == 'GET':
             all_order_to_dict = [order.to_dict() for order in all_orders]
             response = make_response(all_order_to_dict, 200)
+
+        if request.method == 'POST':
+            form_data = request.get_json()
+            newOrder = Order(
+                total=form_data["total"],
+                notes=form_data["notes"],
+                customer_id=form_data["customer_id"]
+            )
+            db.session.add(newOrder)
+            db.session.commit()
+            newest_order = Order.query.order_by(Order.id.desc()).first()
+            response = make_response(newest_order.to_dict(), 200)
     else:
         response = make_response({"error": "404: Could not find orders."})
 
@@ -170,6 +193,6 @@ def order_by_id(id):
             response = make_response({"success": f"Order with id of {id} has been deleted."}, 204)
 
         return response
-
+    
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

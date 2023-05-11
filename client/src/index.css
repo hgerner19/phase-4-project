@@ -1,6 +1,7 @@
 body {
     margin: auto;
     text-align: center;
+    background-color: beige;
 }
 
 .navBar {
@@ -40,7 +41,8 @@ body {
 }
 
 #menuHeader {
-    background-image: url("./images/stefan-c-asafti-9p6pFEwq-wI-unsplash.jpg");
+    color: black;
+    /* background-image: url("./images/stefan-c-asafti-9p6pFEwq-wI-unsplash.jpg"); */
 }
 
 h3 {
@@ -68,6 +70,8 @@ h3 {
     background-position: 50% 50%;
     height: 100%;
     width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 #appsMenuDiv {
@@ -84,4 +88,8 @@ h3 {
 
 #beveragesMenuDiv {
     background-image: url("./images/gabriella-clare-marino-kpTkEF5Eyos-unsplash.jpg");
+}
+
+.mainButton {
+    background-color: #DCDCF5;
 }
