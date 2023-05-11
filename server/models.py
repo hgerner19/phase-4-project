@@ -1,11 +1,11 @@
 from sqlalchemy_serializer import SerializerMixin
-
+from sqlalchemy.ext.hybrid import hybrid_property
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 
-from config import db
+from config import db, bcrypt
 
 # Models go here!
 class Customer(db.Model, SerializerMixin):
@@ -18,7 +18,7 @@ class Customer(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key = True)
     first_name = db.Column(db.String)
     last_name = db.Column(db.String)
-    email = db.Column(db.String)
+    email = db.Column(db.String, unique=True, nullable=False)
     phone_number = db.Column(db.Integer)
     password_hash = db.Column(db.String)
     address = db.Column(db.String)
@@ -34,6 +34,23 @@ class Customer(db.Model, SerializerMixin):
                         creator=lambda oi: Order(order_item=oi))
     # menu_items = association_proxy('orders', 'menu_item',
     #                     creator=lambda mi: Order(menu_item=mi))
+    @hybrid_property
+    def password_hash(self):
+        raise AttributeError('Password hashes may not be viewed.')
+
+    @password_hash.setter
+    def password_hash(self, password):
+        password_hash = bcrypt.generate_password_hash(
+            password.encode('utf-8'))
+        self._password_hash = password_hash.decode('utf-8')
+
+    def authenticate(self, password):
+        return bcrypt.check_password_hash(
+            self._password_hash, password.encode('utf-8'))
+
+    def __repr__(self):
+        return f'<Customer {self.email}>'
+
 
     @validates('phone_number', 'email', 'payment')
     def validate_customer(self, key, value):
