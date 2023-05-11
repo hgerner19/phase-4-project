@@ -48,18 +48,50 @@ def menu_item_by_id(id):
     
     return response
 
-@app.route('/customers', methods=['GET'])
+@app.route('/customers', methods=['GET', 'POST'])
 def customers():
     all_customers = Customer.query.all()
 
     if all_customers:
         if request.method == 'GET':
             response = make_response(all_customers.to_dict(), 200)
+        
+        if request.method == 'POST':
+            form_data = request.get_json()
+            newCustomer = Customer(
+                first_name=form_data["first_name"],
+                last_name=form_data["last_name"],
+                email=form_data["email"],
+                phone_number=form_data["phone_number"],
+                password_hash=form_data["password_hash"],
+                address=form_data["address"]
+            )
+
+            db.session.add(newCustomer)
+            db.session.commit()
+
+            response = make_response({"success": "New customer created!"})
 
     else:
         response = make_response({"error": "404: Customers not found."})
 
     return response
+
+# was beginning to try logging in users
+# @app.route('/customers/account', methods=['GET'])
+# def customer_account():
+#     form_data = request.get_json()
+#     email = form_data["email"]
+#     password = form_data["password"]
+#     existing_customer = Customer.query.filter_by(email=email, password_hash = password).one_or_none()
+
+#     if existing_customer:
+#         response = make_response(existing_customer.to_dict(), 200)
+
+#     else:
+#         response = make_response({"error": "404: Customer with specified email and password not found."})
+
+#     return response
 
 @app.route('/customers/<int:id>', methods=['GET', 'DELETE'])
 def customer_by_id(id):

@@ -22,11 +22,24 @@ const Login = () => {
     const handleLogin = (event) => {
         event.preventDefault()
         if (userLogin.email && userLogin.password) {
+            // fetchUserLogin()
             console.log(userLogin)
         } else {
             window.alert("Your passwords do not match.  Please reenter your password and try again.")
         }
     }
+
+    // const fetchUserLogin = () => {
+    //     fetch("/customers/account", {
+    //         methods: "GET",
+    //         headers: {
+    //             "content-type": "application/json",
+    //         },
+    //         // body: JSON.stringify(userLogin)
+    //     })
+    //     .then((response) => response.json())
+    //     .then((userData) => console.log(userData))
+    // }
 
     const handleSignupRedirect = () => {
         history.push({pathname: "/create-account"})
