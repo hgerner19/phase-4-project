@@ -193,6 +193,75 @@ def order_by_id(id):
             response = make_response({"success": f"Order with id of {id} has been deleted."}, 204)
 
         return response
+class Signup(Resource):
+
+    def post(self):
+        request_json - request.get_json()
+
+        username = request_json.get('email')
+        password = request_json.get('password')
+
+
+        customer = Customer(
+            username = email
+            
+        )
+        customer.password_hash = password
+
+        try:
+            db.session.add(user)
+            db.session.commit()
+
+            session['customer_id'] = customer.id
+
+            return customer.to_dict(), 201
+
+        except IntegrityError:
+            return {'error' : '422 Unprocessable Entity'}, 422 
+
+class CheckSession(Resource):
+    def get(self):
+        if session.get('customer_id'):
+            customer = Customer.query.filter(Customer.id == session['customer_id']).first()
+
+            return customer.to_dict(), 200
+        return {'error': '401 Unauthorized'}, 401
+
+class Login(Resource):
     
+    def post(self):
+        request_json = request.get_json()
+
+        username = request_json.get('email')
+        password = request_json.get('password')
+
+        customer = Customer.query.filter(Customer.email == username).first()
+
+        if customer: 
+            if customer.authenticate(password):
+
+                session['customer_id'] = customer.id
+                return customer.to_dict(), 200
+
+        return {'error' : '401 Unauthroized'} , 401
+
+class Logout(Resource):
+
+    def delete(self):
+
+        if session.get('customer_id'):
+            session['customer_id'] = None
+            return {}, 204
+        
+        return {'error': '401 Unauthorized'}, 401
+    
+api.add_resource(Signup, '/signup', endpoint='signup')
+api.add_resource(CheckSession, '/check_session', endpoint='check_session')
+api.add_resource(Login, '/login', endpoint='login')
+api.add_resource(Logout, '/logout', endpoint='logout')
+
+
+
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
+
