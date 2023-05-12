@@ -3,7 +3,8 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request, make_response
+from sqlite3 import IntegrityError
+from flask import request, make_response, session
 from flask_restful import Resource
 
 # Local imports
@@ -63,7 +64,7 @@ def customers():
                 last_name=form_data["last_name"],
                 email=form_data["email"],
                 phone_number=form_data["phone_number"],
-                password_hash=form_data["password_hash"],
+                password_hash=form_data["_password_hash"],
                 address=form_data["address"]
             )
 
@@ -196,20 +197,20 @@ def order_by_id(id):
 class Signup(Resource):
 
     def post(self):
-        request_json - request.get_json()
+        request_json = request.get_json()
 
         username = request_json.get('email')
-        password = request_json.get('password')
+        password = request_json.get('_password_hash')
 
 
         customer = Customer(
-            username = email
+            username = request_json["email"]
             
         )
-        customer.password_hash = password
+        customer._password_hash = password
 
         try:
-            db.session.add(user)
+            db.session.add(customer)
             db.session.commit()
 
             session['customer_id'] = customer.id

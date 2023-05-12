@@ -20,9 +20,9 @@ class Customer(db.Model, SerializerMixin):
     last_name = db.Column(db.String)
     email = db.Column(db.String, unique=True, nullable=False)
     phone_number = db.Column(db.Integer)
-    password_hash = db.Column(db.String)
+    _password_hash = db.Column(db.String)
     address = db.Column(db.String)
-    payment = db.Column(db.Integer)
+    _payment = db.Column(db.Integer)
     points = db.Column(db.Integer, default=0)
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
@@ -34,14 +34,15 @@ class Customer(db.Model, SerializerMixin):
                         creator=lambda oi: Order(order_item=oi))
     # menu_items = association_proxy('orders', 'menu_item',
     #                     creator=lambda mi: Order(menu_item=mi))
+        # raise AttributeError('Password hashes may not be viewed.')
     @hybrid_property
     def password_hash(self):
-        raise AttributeError('Password hashes may not be viewed.')
+        return self._password_hash
 
     @password_hash.setter
     def password_hash(self, password):
-        password_hash = bcrypt.generate_password_hash(
-            password.encode('utf-8'))
+        password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
+        print(password_hash)
         self._password_hash = password_hash.decode('utf-8')
 
     def authenticate(self, password):
@@ -50,7 +51,24 @@ class Customer(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f'<Customer {self.email}>'
+    # -------------------
+    # @hybrid_property
+    # def password_hash(self):
+    #     return self._password_hash
+    
+    # @password_hash.setter
+    # def password_hash(self, password):
+    #     password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
+    #     print(password_hash)
+    #     self._password_hash = password_hash.decode('utf-8')
 
+    # def authenticate(self, password):
+    #     return bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
+   
+
+    # def __repr__(self):
+    #     return f'< username:{self.name}'
+    #  -----------------------------------------
 
     @validates('phone_number', 'email', 'payment')
     def validate_customer(self, key, value):
@@ -67,7 +85,7 @@ class Customer(db.Model, SerializerMixin):
                 raise ValueError("Not a valid credit card number.")
             return value
 
-    
+   
 class MenuItem(db.Model, SerializerMixin):
     __tablename__ = "menu_items"
     

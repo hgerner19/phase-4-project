@@ -7,7 +7,7 @@ const CreateAccount = () => {
         "last_name": "",
         "email": "",
         "phone_number": null,
-        "password_hash": "",
+        "_password_hash": "",
         "address": ""
     })
 
@@ -22,7 +22,7 @@ const CreateAccount = () => {
 
     const handleSubmitCreateAccount = (event) => {
         event.preventDefault()
-        if (newUser.password_hash === event.target.confirmPassword.value) {
+        if (newUser._password_hash === event.target.confirmPassword.value) {
             console.log("good job on the matching passwords")
             handleCreateAccount()
         } else {
@@ -72,9 +72,9 @@ const CreateAccount = () => {
                 <br></br>
                 <input class="createAccountInput" value={newUser.phone_number} type="number" name="phone_number" placeholder="Enter your phone number here." onChange={handleNewUserChange}></input>
                 <br></br>
-                <input class="createAccountInput" value={newUser.password_hash} type="password" name="password_hash" placeholder="Enter your password_hash here." onChange={handleNewUserChange}></input>
+                <input class="createAccountInput" value={newUser._password_hash} type="password" name="_password_hash" placeholder="Enter your _password_hash here." onChange={handleNewUserChange}></input>
                 <br></br>
-                <input class="createAccountInput" value={newUser.confirmPassword} type="password" name="confirmPassword" placeholder="Reenter you password_hash." onChange={handleNewUserChange}></input>
+                <input class="createAccountInput" value={newUser.confirmPassword} type="password" name="confirmPassword" placeholder="Reenter you _password_hash." onChange={handleNewUserChange}></input>
                 <br></br>
                 <input class="createAccountInput" value={newUser.address} type="text" name="address" placeholder="Ender your address here." onChange={handleNewUserChange}></input>
                 <br></br>

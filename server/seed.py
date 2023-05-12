@@ -53,8 +53,8 @@ if __name__ == '__main__':
 
         print("Creating customers...")
 
-        connor = Customer(first_name="Connor", last_name="Kormos", password_hash="test1", phone_number=1234567890, email="connor@connor.com", address="1234 Main Street", payment=1234567891023456)
-        holden = Customer(first_name="Holden", last_name="Gerner", password_hash="test2", phone_number=2345678901, email="connor@connor.com", address="2345 S Main Street", payment=1111222233334444)
+        connor = Customer(first_name="Connor", last_name="Kormos", _password_hash="test1", phone_number=1234567890, email="connor@connor.com", address="1234 Main Street", payment=1234567891023456)
+        holden = Customer(first_name="Holden", last_name="Gerner", _password_hash="test2", phone_number=2345678901, email="holden@holden.com", address="2345 S Main Street", payment=1111222233334444)
         
         print("Creating menu items...")
 
