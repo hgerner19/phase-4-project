@@ -41,25 +41,7 @@ const CreateAccount = () => {
         .then((response) => response.json())
         .then((newCustomerData) => console.log(newCustomerData))
     }
-	// const addSong = (songData) => {
-	// 	const postReqObj = {
-	// 		method: "POST",
-	// 		headers: {
-	// 			"content-type": "application/json",
-	// 		},
-	// 		body: JSON.stringify(songData),
-	// 	}
-	// 	fetch("/songs", postReqObj)
-	// 		.then((res) => res.json())
-	// 		.then((newSong) => {
-	// 			if (newSong["message"]) {
-	// 				alert(newSong["message"])
-	// 			} else {
-	// 				setSongs((prevSongs) => [newSong, ...prevSongs])
-	// 			}
-	// 		})
-	// 		.catch((err) => console.log(err))
-	// }
+
     return (
         <div id="createAccountDiv">
             <h1>Create An Account Here!</h1>

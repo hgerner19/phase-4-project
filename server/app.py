@@ -70,36 +70,18 @@ def customers():
                 address=form_data["address"]
             )
 
-            # try:
             db.session.add(newCustomer)
             db.session.commit()
 
             session['customer_id'] = newCustomer.id
             response = make_response({"success": "New customer created!"})
 
-            # except:
-            # response = make_response({"error": "422: Unprocessable Entitity"}, 422)
 
     else:
         response = make_response({"error": "404: Customers not found."})
 
     return response
 
-# was beginning to try logging in users
-# @app.route('/customers/account', methods=['GET'])
-# def customer_account():
-#     form_data = request.get_json()
-#     email = form_data["email"]
-#     password = form_data["password"]
-#     existing_customer = Customer.query.filter_by(email=email, password_hash = password).one_or_none()
-
-#     if existing_customer:
-#         response = make_response(existing_customer.to_dict(), 200)
-
-#     else:
-#         response = make_response({"error": "404: Customer with specified email and password not found."})
-
-#     return response
 
 @app.route('/customers/<int:id>', methods=['GET', 'DELETE'])
 def customer_by_id(id):
@@ -201,6 +183,7 @@ def order_by_id(id):
             response = make_response({"success": f"Order with id of {id} has been deleted."}, 204)
 
         return response
+    
 class Signup(Resource):
 
     def post(self):
@@ -235,40 +218,12 @@ class CheckSession(Resource):
             return customer.to_dict(), 200
         return {'error': '401 Unauthorized'}, 401
 
-# @app.route("/login", methods=['POST'])
-# def login():
-#     if request.method == "POST":
-#         request_json = request.get_json()
-
-#         username = request_json.get('email')
-#         password = request_json.get('password')
-
-#         customer = Customer.query.filter(Customer.email == username).first()
-
-#         if customer and customer.authenticate(password):
-#             # if customer.authenticate(password):
-
-#             session['customer_id'] = customer.id
-#             return customer.to_dict(), 200
-        
-#         # else:
-#         #     return make_response({"error": "Unauthorized"}, 400)
-
-#         return {'error' : '401 Unauthroized'} , 401
 
 class Login(Resource):
     
     def post(self):
         customer = Customer.query.filter_by(email=request.get_json()['email']).first()
-        # request_json = request.get_json()
 
-
-        # username = request_json["email"]
-        # password = request_json["password"]
-
-        # customer = Customer.query.filter(Customer.email == username).first()
-
-        # if customer and customer.authenticate(password):
         if customer and customer.authenticate(request.get_json()['password']):
             # if customer.authenticate(password):
 
@@ -285,27 +240,16 @@ class Logout(Resource):
     def delete(self):
         response = make_response('Logged out')
 
-        # Delete all cookies by iterating over the request cookies
         for cookie in request.cookies:
             response.set_cookie(cookie, '', expires=0)
 
         return response
-        # if session.get('customer_id'):
-        # # try:
-        #     response = make_response('Logged out')
-        #     response.set_cookie('customer_id', '', expires=0)
-        #     session['session'] = None
-        #     return {}, 204
-        
-        # except:
-        # return {'error': '401 Unauthorized'}, 401
+
     
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(Logout, '/logout', endpoint='logout')
-
-
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

@@ -6,12 +6,19 @@ import Home from "./Home.js"
 import Menu from "./Menu.js"
 import Login from "./Login.js"
 import CreateAccount from "./CreateAccount.js";
-import AboutUs from "./AboutUs.js";
 import Order from "./Order.js";
 import OrderCheckout from "./OrderCheckout.js"
 
 function App() {
-  // Code goes here!
+
+  const [user, setUser] = useState({
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "address": "",
+
+  })
+
   return (
     <>
       <NavBar />
@@ -33,9 +40,6 @@ function App() {
         </Route>
         <Route exact path="/order/checkout">
           <OrderCheckout />
-        </Route>
-        <Route exact path="/about-us">
-          <AboutUs />
         </Route>
       </Switch>
     </>

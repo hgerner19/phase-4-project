@@ -35,7 +35,6 @@ const Order = () => {
             "quantity": orderItemQuantity
         }
         orderItems.push(newOrderItem)
-        // console.log(orderItems)
     }
 
     const renderOrderItemForm = (category) => {
