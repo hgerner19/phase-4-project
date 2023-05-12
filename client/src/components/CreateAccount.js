@@ -63,22 +63,22 @@ const CreateAccount = () => {
     return (
         <div id="createAccountDiv">
             <h1>Create An Account Here!</h1>
-            <form class="createAccountForm" onSubmit={(event) => handleSubmitCreateAccount(event)}>
-                <input class="createAccountInput" value={newUser.first_name} type="text" name="first_name" placeholder="Enter your first name here." onChange={handleNewUserChange}></input>
+            <form className="createAccountForm" onSubmit={(event) => handleSubmitCreateAccount(event)}>
+                <input className="createAccountInput" value={newUser.first_name} type="text" name="first_name" placeholder="Enter your first name here." onChange={handleNewUserChange}></input>
                 <br></br>
-                <input class="createAccountInput" value={newUser.last_name} type="text" name="last_name" placeholder="Enter your last name here." onChange={handleNewUserChange}></input>
+                <input className="createAccountInput" value={newUser.last_name} type="text" name="last_name" placeholder="Enter your last name here." onChange={handleNewUserChange}></input>
                 <br></br>
-                <input class="createAccountInput" value={newUser.email} type="email" name="email" placeholder="Enter your email here." onChange={handleNewUserChange}></input>
+                <input className="createAccountInput" value={newUser.email} type="email" name="email" placeholder="Enter your email here." onChange={handleNewUserChange}></input>
                 <br></br>
-                <input class="createAccountInput" value={newUser.phone_number} type="number" name="phone_number" placeholder="Enter your phone number here." onChange={handleNewUserChange}></input>
+                <input className="createAccountInput" value={newUser.phone_number} type="number" name="phone_number" placeholder="Enter your phone number here." onChange={handleNewUserChange}></input>
                 <br></br>
-                <input class="createAccountInput" value={newUser._password_hash} type="password" name="_password_hash" placeholder="Enter your _password_hash here." onChange={handleNewUserChange}></input>
+                <input className="createAccountInput" value={newUser._password_hash} type="password" name="_password_hash" placeholder="Enter your _password_hash here." onChange={handleNewUserChange}></input>
                 <br></br>
-                <input class="createAccountInput" value={newUser.confirmPassword} type="password" name="confirmPassword" placeholder="Reenter you _password_hash." onChange={handleNewUserChange}></input>
+                <input className="createAccountInput" value={newUser.confirmPassword} type="password" name="confirmPassword" placeholder="Reenter you _password_hash." onChange={handleNewUserChange}></input>
                 <br></br>
-                <input class="createAccountInput" value={newUser.address} type="text" name="address" placeholder="Ender your address here." onChange={handleNewUserChange}></input>
+                <input className="createAccountInput" value={newUser.address} type="text" name="address" placeholder="Ender your address here." onChange={handleNewUserChange}></input>
                 <br></br>
-                <button class="createAccountInput" type="submit">Create Account!</button>
+                <button className="createAccountInput" type="submit">Create Account!</button>
             </form>
         </div>
     )

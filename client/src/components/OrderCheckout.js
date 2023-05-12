@@ -41,12 +41,12 @@ const OrderCheckout = () => {
             },
             body: JSON.stringify(newOrder),
         })
-        .then((response) => response.json())
-        .then((newOrderData) => {
-            createOrderItem(newOrderData.id)
-
-        })
-        .catch((error) => console.error(error))
+        
+        // .then((response) => response.json())
+        // .then((newOrderData) => {
+        //     createOrderItem(newOrderData.id)
+        // })
+        // .catch((error) => console.error(error))
     }
 
     const createOrderItem = (orderId) => {
@@ -109,7 +109,7 @@ const OrderCheckout = () => {
                     <br></br><br></br>
                     <textarea name="notes" value={newOrder.notes} placeholder="Have any additional notes or customizations? Enter that here!" onChange={handleOrderChange}></textarea>
                     <br></br><br></br>
-                    <button type="submit" class="mainButton">Place Your Order!</button>
+                    <button type="submit" className="mainButton">Place Your Order!</button>
                 </form>
             </div>
         </>

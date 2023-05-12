@@ -2,7 +2,7 @@
 const MenuItem = ({item}) => {
     return (
         <div>
-            <img class="menuItemImg" src={item.image} alt="No image available." style={{height:"150px", width:"auto"}} />
+            <img className="menuItemImg" src={item.image} alt="No image available." style={{height:"150px", width:"auto"}} />
             <h4>{item.name} - {item.price}</h4>
             <p>{item.description}</p>
         </div>

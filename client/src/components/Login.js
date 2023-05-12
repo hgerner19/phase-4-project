@@ -22,44 +22,81 @@ const Login = () => {
     const handleLogin = (event) => {
         event.preventDefault()
         if (userLogin.email && userLogin.password) {
-            // fetchUserLogin()
+            fetchUserLogin()
             console.log(userLogin)
         } else {
             window.alert("Your passwords do not match.  Please reenter your password and try again.")
         }
     }
-
     // const fetchUserLogin = () => {
     //     fetch("/customers/account", {
-    //         methods: "GET",
-    //         headers: {
-    //             "content-type": "application/json",
-    //         },
-    //         // body: JSON.stringify(userLogin)
+    //       method: "GET",
+    //       headers: {
+    //         "content-type": "application/json",
+    //       },
+    //       // body: JSON.stringify(userLogin)
     //     })
-    //     .then((response) => response.json())
-    //     .then((userData) => console.log(userData))
-    // }
+    //       .then((response) => {
+    //         if (response.ok) {
+    //           return response.json();
+    //         } else {
+    //           throw new Error("Network response was not OK.");
+    //         }
+    //       })
+    //       .then((userData) => {
+    //         // Handle the userData received from the server
+    //         console.log(userData);
+    //       })
+    //       .catch((error) => {
+    //         // Handle any errors that occur during the request
+    //         console.error("Error:", error);
+    //       });
+    //   };
+    const fetchUserLogin = () => {
+        console.log("test fetchUserLogin")
+        fetch("/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userLogin),
+        })
+        .then((response) => response.json())
+        .then((userData) => console.log(userData))
+    }
 
     const handleSignupRedirect = () => {
         history.push({pathname: "/create-account"})
+    }
+
+    const handleLogout = () => {
+        fetch("/logout", {
+            method: "DELETE"
+        })
+        // .then((response) => response.json())
+        // .then((logoutData) => console.log(logoutData))
     }
 
     return (
         <>
         <div id="loginDiv">
             <h1>Already have an account? Login here!</h1>
-            <form class="loginForm" onSubmit={(event) => handleLogin(event)}>
-                <input class="loginInput" value={userLogin.email} type="email" name="email" placeholder="Enter your email here." onChange={handleUserLoginChange}></input>
+            <form className="loginForm" onSubmit={(event) => handleLogin(event)}>
+                <input className="loginInput" value={userLogin.email} type="email" name="email" placeholder="Enter your email here." onChange={handleUserLoginChange}></input>
                 <br></br>
-                <input class="loginInput" value={userLogin.password} type="password" name="password" placeholder="Enter your password here." onChange={handleUserLoginChange}></input>
+                <input className="loginInput" value={userLogin.password} type="password" name="password" placeholder="Enter your password here." onChange={handleUserLoginChange}></input>
                 <br></br>
-                <button class="loginInput" type="submit">Login!</button>
+                <button className="loginInput" type="submit">Login!</button>
             </form>
         </div>
         <div id="signupRedirectButton">
             <h2>Don't have an account yet?</h2>
             <button id="signupRedirect" onClick={() => handleSignupRedirect()}>Signup here!</button>
+        </div>
+        <br></br><br></br>
+        <div id="logoutRedirect">
+            <h2>Logout Here</h2>
+            <button onClick={handleLogout}>Logout</button>
         </div>
         </>
     )

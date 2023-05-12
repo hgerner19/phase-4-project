@@ -77,7 +77,7 @@ const Order = () => {
                 {renderOrderItemForm("Beverage")}
             </div>
             <br></br><br></br>
-            <button class="mainButton" onClick={handleCheckoutRedirect}>Proceed to Checkout</button>            
+            <button className="mainButton" onClick={handleCheckoutRedirect}>Proceed to Checkout</button>            
         </div>
     )
 }
