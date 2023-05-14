@@ -34,7 +34,7 @@ const CreateAccount = () => {
         fetch("/customers", {
             method: "POST",
             headers: {
-                "content-type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify(newUser),
         })

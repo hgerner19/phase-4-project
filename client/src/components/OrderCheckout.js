@@ -41,38 +41,8 @@ const OrderCheckout = () => {
             },
             body: JSON.stringify(newOrder),
         })
-        
-        // .then((response) => response.json())
-        // .then((newOrderData) => {
-        //     createOrderItem(newOrderData.id)
-        // })
-        // .catch((error) => console.error(error))
-    }
-
-    const createOrderItem = (orderId) => {
-        orderItems.map((item) => {
-            let oneOrderItem = {
-                "order_id": orderId,
-                "menu_item_id": item.id,
-                "quantity": Number(item.quantity)
-            }
-            handleOrderItemPost(oneOrderItem)
-        })
-    // orderItems.map((item) => {
-    //   console.log(item)
-    // })
-    }
-
-    const handleOrderItemPost = (oneOrderItem) => {
-        fetch("/orderitems", {
-            method: "POST",
-            headers: {
-                "content-type": "application/json",
-            },
-            body: JSON.stringify(oneOrderItem),
-        })
-        .then((response) => response.json())
-        .then((newOrderItemData) => console.log(newOrderItemData))
+        window.alert("Thanks for placing your order!")
+        history.push({pathname:"/"})
     }
 
     const handleOrderChange = (event) => {

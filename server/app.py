@@ -73,8 +73,15 @@ def customers():
             db.session.add(newCustomer)
             db.session.commit()
 
-            session['customer_id'] = newCustomer.id
             response = make_response({"success": "New customer created!"})
+
+            # session['customer_id'] = newCustomer.id
+            newest_customer = Customer.query.order_by(Customer.id.desc()).first()
+            
+            response.set_cookie('customer_name', newest_customer.first_name)
+            response.set_cookie('customer_email', newest_customer.email)
+            
+            # response.set_cookie('customer_id', newest_customer.id)
 
 
     else:
@@ -83,7 +90,7 @@ def customers():
     return response
 
 
-@app.route('/customers/<int:id>', methods=['GET', 'DELETE'])
+@app.route('/customers/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
 def customer_by_id(id):
     customer = Customer.query.filter(Customer.id == id).one_or_none()
 
@@ -95,6 +102,22 @@ def customer_by_id(id):
             db.session.delete(customer)
             db.session.commit()
             response = make_response({"success": f"Customer of id {id} deleted."})
+
+        if request.method == 'PATCH':
+            form_data = request.get_json()
+            for attr in form_data:
+                setattr(customer, attr, form_data[attr])
+
+            db.session.add(customer)
+            db.session.commit()
+
+            response = make_response(customer.to_dict(), 201)
+            for cookie in request.cookies:
+                response.set_cookie(cookie, '', expires=0)
+
+            response.set_cookie('customer_name', customer.first_name)
+            response.set_cookie('customer_email', customer.email)
+
     
     else:
         response = make_response({"error": f"404: Customer of id {id} not found."})
@@ -169,7 +192,8 @@ def orders():
 
     return response
     
-@app.route('/orders/<int:id>', methods=['GET', 'DELETE'])
+
+@app.route('/orders/<int:id>', methods=['GET', 'DELETE', 'PATCH'])
 def order_by_id(id):
     order = Order.query.filter(Order.id == id).one_or_none()
 
@@ -181,6 +205,11 @@ def order_by_id(id):
             db.session.delete(order)
             db.session.commit()
             response = make_response({"success": f"Order with id of {id} has been deleted."}, 204)
+
+        # if request.method == 'PATCH':
+        #     form_data = request.get_json()
+        #     for attr in form_data:
+        #         setattr(order, form_data(attr))
 
         return response
     
@@ -222,18 +251,26 @@ class CheckSession(Resource):
 class Login(Resource):
     
     def post(self):
+
         customer = Customer.query.filter_by(email=request.get_json()['email']).first()
 
         if customer and customer.authenticate(request.get_json()['password']):
             # if customer.authenticate(password):
 
-            session['customer_id'] = customer.id
-            return customer.to_dict(), 200
+            # session['customer_id'] = customer.id
+            # newest_customer = Customer.query.order_by(Customer.id.desc()).first()
+            
+            response = make_response(customer.to_dict(), 200)
+            response.set_cookie('customer_name', customer.first_name)
+            response.set_cookie('customer_email', customer.email)
         
         # else:
         #     return make_response({"error": "Unauthorized"}, 400)
 
-        return {'error' : '401 Unauthroized'} , 401
+        else:
+            response = make_response({'error' : '401 Unauthroized'} , 401)
+
+        return response
 
 class Logout(Resource):
 
@@ -245,11 +282,20 @@ class Logout(Resource):
 
         return response
 
+@app.route('/cookies', methods=['GET'])
+def cookies():
+    if request.method == 'GET':
+        email = request.cookies.get('customer_email')
+        customer = Customer.query.filter(Customer.email == email).first()
+        if customer:
+            response = make_response(customer.to_dict(), 200)
+    return response
     
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(Logout, '/logout', endpoint='logout')
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

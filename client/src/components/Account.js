@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom"
 
-const Login = () => {
+const Account = () => {
 
     const [userLogin, setUserLogin] = useState({
         "email": "",
@@ -65,10 +65,6 @@ const Login = () => {
         .then((userData) => console.log(userData))
     }
 
-    const handleSignupRedirect = () => {
-        history.push({pathname: "/create-account"})
-    }
-
     const handleLogout = () => {
         fetch("/logout", {
             method: "DELETE"
@@ -79,6 +75,10 @@ const Login = () => {
 
     return (
         <>
+        <div id="accountInfoDiv">
+            <h1>View your account information here.</h1>
+            <button onClick={() => history.push({pathname: "/my-account"})}>Your Account.</button>
+        </div>
         <div id="loginDiv">
             <h1>Already have an account? Login here!</h1>
             <form className="loginForm" onSubmit={(event) => handleLogin(event)}>
@@ -91,7 +91,7 @@ const Login = () => {
         </div>
         <div id="signupRedirectButton">
             <h2>Don't have an account yet?</h2>
-            <button id="signupRedirect" onClick={() => handleSignupRedirect()}>Signup here!</button>
+            <button id="signupRedirect" onClick={() => history.push({pathname: "/create-account"})}>Signup here!</button>
         </div>
         <br></br><br></br>
         <div id="logoutRedirect">
@@ -102,4 +102,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Account

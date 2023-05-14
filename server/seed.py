@@ -52,9 +52,8 @@ if __name__ == '__main__':
         Order.query.delete()
 
         print("Creating customers...")
+        guest = Customer(first_name="Guest", last_name="Account", _password_hash="password", phone_number=2345678901, email="test@test.com", address="123 Test Street", payment=1111222233334444)
 
-        # connor = Customer(first_name="Connor", last_name="Kormos", _password_hash="test1", phone_number=1234567890, email="connor@connor.com", address="1234 Main Street", payment=1234567891023456)
-        holden = Customer(first_name="Holden", last_name="Gerner", _password_hash="test2", phone_number=2345678901, email="holden@holden.com", address="2345 S Main Street", payment=1111222233334444)
         
         print("Creating menu items...")
 
@@ -99,8 +98,8 @@ if __name__ == '__main__':
         print("Creating orders...")
 
         order1 = Order(notes="This is Holden's order.", customer_id=2)
-        # order2 = Order(notes="This is Connor's first order.", customer_id=1)
-        # order3 = Order(notes="This is Connor's second order.", customer_id=1)        
+        order2 = Order(notes="This is Connor's first order.", customer_id=1)
+        order3 = Order(notes="This is Connor's second order.", customer_id=1)        
 
         print("Creating order items...")
 
@@ -110,7 +109,7 @@ if __name__ == '__main__':
         oi4 = OrderItem(order_id=3, menu_item_id=1, quantity=1)
 
 
-        db.session.add_all([holden, order1, oi1, oi2, oi3, oi4])
+        db.session.add_all([guest, order1, order2, order3, oi1, oi2, oi3, oi4])
         db.session.commit()
         
         # Seed code goes here!

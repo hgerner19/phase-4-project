@@ -17,6 +17,8 @@ flask-cors = "*"
 gunicorn = "*"
 honcho = "*"
 flask-bcrypt = "*"
+pipenv = "*"
+shell = "*"
 
 [dev-packages]
 

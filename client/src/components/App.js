@@ -4,8 +4,9 @@ import { Switch, Route } from "react-router-dom";
 import NavBar from "./NavBar.js"
 import Home from "./Home.js"
 import Menu from "./Menu.js"
-import Login from "./Login.js"
+import Account from "./Account.js"
 import CreateAccount from "./CreateAccount.js";
+import MyAccount from "./MyAccount.js";
 import Order from "./Order.js";
 import OrderCheckout from "./OrderCheckout.js"
 
@@ -29,8 +30,11 @@ function App() {
         <Route exact path="/menu">
           <Menu />
         </Route>
-        <Route exact path="/login">
-          <Login />
+        <Route exact path="/account">
+          <Account />
+        </Route>
+        <Route exact path="/my-account">
+          <MyAccount />
         </Route>
         <Route exact path="/create-account">
           <CreateAccount />
