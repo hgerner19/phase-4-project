@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import {useLocation, useHistory } from "react-router-dom"
+import OrderCountdown from "./OrderCountdown.js"
 
 const OrderCheckout = () => {
 
@@ -7,6 +8,7 @@ const OrderCheckout = () => {
     const location = useLocation()
     const orderItems = location.state
 
+    const [orderPlaced, setOrderPlaced] = useState(false)
     const [newOrder, setNewOrder] = useState({
         "total": 0,
         "notes": "",
@@ -25,12 +27,28 @@ const OrderCheckout = () => {
     })
 
     useEffect(() => {
+        setOrderPlaced(false)
         setNewOrder((prevState) => ({
             ...prevState,
             ["total"]: total
         }))
     }, [total])
 
+    const handleOrderItemsPost = (order_id) => {
+        orderItems.map((item) => {
+            fetch("/orderitems", {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    "order_id": Number(order_id),
+                    "menu_item_id": Number(item.id),
+                    "quantity": Number(item.quantity)
+                })
+            })
+        })
+    }
 
     const handleOrderSubmit = (event) => {
         event.preventDefault()
@@ -41,8 +59,11 @@ const OrderCheckout = () => {
             },
             body: JSON.stringify(newOrder),
         })
+        .then((response) => response.json())
+        .then((orderData) => handleOrderItemsPost(orderData.id))
+        setOrderPlaced(true)
         window.alert("Thanks for placing your order!")
-        history.push({pathname:"/"})
+        // history.push({pathname:"/"})
     }
 
     const handleOrderChange = (event) => {
@@ -53,7 +74,6 @@ const OrderCheckout = () => {
             [name]: value
         }))
     }
-    
 
     return (
         <>
@@ -62,6 +82,9 @@ const OrderCheckout = () => {
                 {renderOrderItems}
                 <p>Total: ${total}</p>
             </div>
+            {orderPlaced ? 
+            <OrderCountdown />
+            :
             <div id="checkoutDiv">
                 <h3 style={{color:"black", textShadow:"None"}}>Please enter your information below.</h3>
                 <form id="checkoutCustomerForm" onSubmit={event => handleOrderSubmit(event)}>
@@ -81,6 +104,10 @@ const OrderCheckout = () => {
                     <br></br><br></br>
                     <button type="submit" className="mainButton">Place Your Order!</button>
                 </form>
+            </div>
+            }
+            <div id="orderCountdownDiv">
+                {/* {orderPlaced ? <h1>`${minutes} minutes ${seconds} seconds`</h1> : null} */}
             </div>
         </>
     )

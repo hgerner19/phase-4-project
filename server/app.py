@@ -192,7 +192,6 @@ def orders():
 
     return response
     
-
 @app.route('/orders/<int:id>', methods=['GET', 'DELETE', 'PATCH'])
 def order_by_id(id):
     order = Order.query.filter(Order.id == id).one_or_none()
@@ -206,13 +205,29 @@ def order_by_id(id):
             db.session.commit()
             response = make_response({"success": f"Order with id of {id} has been deleted."}, 204)
 
-        # if request.method == 'PATCH':
-        #     form_data = request.get_json()
-        #     for attr in form_data:
-        #         setattr(order, form_data(attr))
-
         return response
-    
+
+@app.route('/cancel_order', methods=['DELETE'])
+def cancel_last_order():
+    last_order = Order.query.order_by(Order.id.desc()).first()
+
+    if last_order:
+        if request.method == 'DELETE':
+            order_items = OrderItem.query.filter(OrderItem.order_id == last_order.id).all()
+            if order_items:
+                for item in order_items:
+                    db.session.delete(item)
+                    db.session.commit()
+            db.session.delete(last_order)
+            db.session.commit()
+            
+            response = make_response({"Success": "Order and order items deleted successfully."}, 204)
+
+    else:
+        response = make_response({"Error": "No order to delete."})
+
+    return response
+
 class Signup(Resource):
 
     def post(self):
