@@ -106,9 +106,6 @@ const OrderCheckout = () => {
                 </form>
             </div>
             }
-            <div id="orderCountdownDiv">
-                {/* {orderPlaced ? <h1>`${minutes} minutes ${seconds} seconds`</h1> : null} */}
-            </div>
         </>
     )
 }

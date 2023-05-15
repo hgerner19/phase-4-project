@@ -3,37 +3,13 @@ import { useHistory } from "react-router-dom"
 
 const MyAccount = () => {
 
-    // const [accountInfo, setAccountInfo] = useState({
-    //     "first_name": "",
-    //     "last_name": "",
-    //     "email": "",
-    //     "phone_number": 1231231234,
-    //     "address": ""
-    // })
-
     const [accountInfo, setAccountInfo] = useState({})
-
-    // const [edit, setEdit] = useState(false)
 
     useEffect(() => {
         fetch("/cookies")
         .then((response) => response.json())
         .then((customerData) => setAccountInfo(customerData))
     }, [])
-
-    // const renderEditOrNot = () => {
-    //     if (edit) {
-    //         return (
-    //             <form id="editAccountInfoForm">
-    //                 <input name="first_name" value={accountInfo.first_name}></input>
-    //             </form>
-    //         )
-    //     } else {
-    //         return (
-    //             <p>{accountInfo.first_name}</p>
-    //         )
-    //     }
-    // }
 
     const handleAccountInfoChange = (event) => {
         setAccountInfo((prevState) => ({
@@ -70,13 +46,13 @@ const MyAccount = () => {
             <form id="editAccountInfoForm" onSubmit={handleEditAccount}>
                 <input name="first_name" value={accountInfo.first_name} type="text" onChange={(event) => handleAccountInfoChange(event)}></input>
                 <br></br><br></br>
-                <input name="last_name" value={accountInfo.last_name} type="text"></input>
+                <input name="last_name" value={accountInfo.last_name} type="text" onChange={(event) => handleAccountInfoChange(event)}></input>
                 <br></br><br></br>
-                <input name="email" value={accountInfo.email} type="text"></input>
+                <input name="email" value={accountInfo.email} type="text" onChange={(event) => handleAccountInfoChange(event)}></input>
                 <br></br><br></br>
-                <input name="phone_number" value={accountInfo.phone_number} type="number"></input>
+                <input name="phone_number" value={accountInfo.phone_number} type="number" onChange={(event) => handleAccountInfoChange(event)}></input>
                 <br></br><br></br>
-                <input name="address" value={accountInfo.address} type="text"></input>
+                <input name="address" value={accountInfo.address} type="text" onChange={(event) => handleAccountInfoChange(event)}></input>
                 <br></br><br></br>
                 <button type="submit">Edit Account</button>
             </form>
